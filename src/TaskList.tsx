@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
+import DeleteTasks from './DeleteTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -20,8 +21,13 @@ export default function TaskList() {
         }
     }
 
+    function handleTasksDeleted() {
+        setTaskList([])
+    }
+
     return (
         <div>
+            <DeleteTasks onTasksDeleted={handleTasksDeleted}/>
             <div>
                 {taskList.map(task => (
                 <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>    
