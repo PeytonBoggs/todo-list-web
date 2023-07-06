@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
+import PostTask from './PostTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -20,8 +21,15 @@ export default function TaskList() {
         }
     }
 
+    function handleListChange() {
+        fetch(GET_TASKS_URL)
+        .then(response => response.json())
+        .then(setTaskList);
+    }
+
     return (
         <div>
+            <PostTask onTaskAdded={handleListChange} />
             <div>
                 {taskList.map(task => (
                 <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>    
