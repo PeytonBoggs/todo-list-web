@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
 
 function App() {
-    const [taskList, setTaskList] = useState<Task[]>([{id: 1, title: "wake up", complete: true}]);
+    const [taskList, setTaskList] = useState<Task[]>([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/tasks?id=&title=&complete=")
