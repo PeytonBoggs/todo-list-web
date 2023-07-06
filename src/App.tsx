@@ -1,6 +1,12 @@
+import AppHeader from './AppHeader'
+import TaskList from './TaskList';
+
 function App() {
     return (
-        <h1>Todo List</h1>
+        <div>
+            <AppHeader />
+            <TaskList />
+        </div>
     )
 }
 
