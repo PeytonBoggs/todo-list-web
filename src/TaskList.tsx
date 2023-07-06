@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
-import DeleteTasks from './DeleteTask';
+import DeleteTasks from './DeleteTasks';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
