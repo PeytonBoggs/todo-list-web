@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
 
+const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
+
 export default function TaskList() {
     const [taskList, setTaskList] = useState<Task[]>([]);
 
-    const getTasksURL: string = "http://localhost:8080/tasks?id=&title=&complete="
-
     useEffect(() => {
-        fetch(getTasksURL)
+        fetch(GET_TASKS_URL)
         .then(response => response.json())
         .then(setTaskList);
     }, []);

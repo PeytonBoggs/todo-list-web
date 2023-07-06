@@ -1,10 +1,10 @@
-import Title from './Title'
+import AppHeader from './AppHeader'
 import TaskList from './TaskList';
 
 function App() {
     return (
         <div>
-            <Title />
+            <AppHeader />
             <TaskList />
         </div>
     )

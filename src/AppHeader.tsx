@@ -1,4 +1,4 @@
-export default function Title() {
+export default function AppHeader() {
     return (
         <div>
             <h1>Todo List</h1>
