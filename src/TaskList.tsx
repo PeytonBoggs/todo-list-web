@@ -8,23 +8,20 @@ export default function TaskList() {
     const [taskList, setTaskList] = useState<Task[]>([]);
 
     useEffect(() => {
-        updateList();
-    });
+        updateList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function updateList() {
         fetch(GET_TASKS_URL)
         .then(response => response.json())
-        .then(setTaskList);
-    }
-
-    function printTasks() {
-        if (taskList == null) {
-            setTaskList([])
-            return
-        }
-
-        return taskList.map(task => (
-            <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>))
+        .then(data => {
+            if (data === null) {
+                setTaskList([]);
+            } else {
+                setTaskList(data);
+            }
+        });
     }
 
     function handleComplete(complete: boolean): string {
@@ -39,7 +36,11 @@ export default function TaskList() {
         <div>
             <DeleteTasks onTasksDeleted={updateList}/>
             <div>
-                {printTasks()}
+                {taskList.map(task => (
+                    <p key={task.id}>
+                        #{task.id}: {task.title} - {handleComplete(task.complete)}
+                    </p>
+                ))}
             </div>
         </div>
     )
