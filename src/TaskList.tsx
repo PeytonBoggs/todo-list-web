@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
+import ToggleTask from './ToggleTask';
 import PostTask from './PostTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
@@ -12,7 +13,7 @@ export default function TaskList() {
         .then(response => response.json())
         .then(setTaskList);
     }, []);
-
+  
     function handleComplete(complete: boolean): string {
         if (complete) {
             return "Completed"
@@ -32,7 +33,10 @@ export default function TaskList() {
             <PostTask onTaskAdded={handleListChange} />
             <div>
                 {taskList.map(task => (
-                <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>    
+                <div>
+                    <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>
+                    <ToggleTask onTaskToggled={handleListChange} taskID={task.id}/>
+                </div>
                 ))}
             </div>
         </div>
