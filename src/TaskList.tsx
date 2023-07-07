@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
 import ToggleTask from './ToggleTask';
 import PostTask from './PostTask';
+import DeleteTask from './DeleteTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -36,6 +37,7 @@ export default function TaskList() {
                 <div>
                     <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>
                     <ToggleTask onTaskToggled={handleListChange} taskID={task.id}/>
+                    <DeleteTask onTaskDeleted={handleListChange} taskID={task.id}/>
                 </div>
                 ))}
             </div>
