@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-interface PatchTaskProps {
-    onTaskPatched: () => void
+interface ToggleTaskProps {
+    onTaskToggled: () => void
     taskID: number
 }
 
-export default function PatchTask({ onTaskPatched, taskID }: PatchTaskProps) {
-    const [patchMessage, setPatchMessage] = useState<string>("");
+export default function ToggleTask({ onTaskToggled, taskID }: ToggleTaskProps) {
+    const [toggleMessage, setToggleMessage] = useState<string>("");
 
     function handleToggleClick(id: number) {
         const url = "http://localhost:8080/tasks/id/" + id
@@ -18,13 +18,15 @@ export default function PatchTask({ onTaskPatched, taskID }: PatchTaskProps) {
             }
         })
         .then(response => response.json())
-        .then(setPatchMessage)
-        .then(onTaskPatched)
+        .then(data => {
+            setToggleMessage(data);
+            onTaskToggled();
+        });
     }
 
     return (
         <div>
-          <button onClick={() => handleToggleClick(taskID)}>Toggle</button><p>{patchMessage}</p>
+          <button onClick={() => handleToggleClick(taskID)}>Toggle</button><p>{toggleMessage}</p>
         </div>
     );
 }

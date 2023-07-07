@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
-import PatchTask from './PatchTask';
+import ToggleTask from './ToggleTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -31,7 +31,7 @@ export default function TaskList() {
                 {taskList.map(task => (
                 <div>
                     <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>
-                    <PatchTask onTaskPatched={updateList} taskID={task.id}/>
+                    <ToggleTask onTaskToggled={updateList} taskID={task.id}/>
                 </div>
                 ))}
             </div>
