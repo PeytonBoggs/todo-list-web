@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
+import ToggleTask from './ToggleTask';
 import PostTask from './PostTask';
 import DeleteTask from './DeleteTask';
 
@@ -13,7 +14,7 @@ export default function TaskList() {
         .then(response => response.json())
         .then(setTaskList);
     }, []);
-
+  
     function handleComplete(complete: boolean): string {
         if (complete) {
             return "Completed"
@@ -34,7 +35,8 @@ export default function TaskList() {
             <div>
                 {taskList.map(task => (
                 <div>
-                    <p key={task.id}>{task.title} - {handleComplete(task.complete)}</p>
+                    <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>
+                    <ToggleTask onTaskToggled={handleListChange} taskID={task.id}/>
                     <DeleteTask onTaskDeleted={handleListChange} taskID={task.id}/>
                 </div>
                 ))}
