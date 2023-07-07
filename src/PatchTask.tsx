@@ -24,7 +24,7 @@ export default function PatchTask({ onTaskPatched, taskID }: PatchTaskProps) {
 
     return (
         <div>
-          <button onClick={() => handleToggleClick(taskID)}>test</button><p>{patchMessage}</p>
+          <button onClick={() => handleToggleClick(taskID)}>Toggle</button><p>{patchMessage}</p>
         </div>
     );
 }
