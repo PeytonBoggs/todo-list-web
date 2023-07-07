@@ -8,10 +8,24 @@ export default function TaskList() {
     const [taskList, setTaskList] = useState<Task[]>([]);
 
     useEffect(() => {
+        updateList();
+    });
+
+    function updateList() {
         fetch(GET_TASKS_URL)
         .then(response => response.json())
         .then(setTaskList);
-    }, []);
+    }
+
+    function printTasks() {
+        if (taskList == null) {
+            setTaskList([])
+            return
+        }
+
+        return taskList.map(task => (
+            <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>))
+    }
 
     function handleComplete(complete: boolean): string {
         if (complete) {
@@ -21,17 +35,11 @@ export default function TaskList() {
         }
     }
 
-    function handleTasksDeleted() {
-        setTaskList([])
-    }
-
     return (
         <div>
-            <DeleteTasks onTasksDeleted={handleTasksDeleted}/>
+            <DeleteTasks onTasksDeleted={updateList}/>
             <div>
-                {taskList.map(task => (
-                <p key={task.id}>#{task.id}: {task.title} - {handleComplete(task.complete)}</p>    
-                ))}
+                {printTasks()}
             </div>
         </div>
     )
