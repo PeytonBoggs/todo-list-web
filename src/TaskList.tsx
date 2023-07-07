@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
-import DeleteTasks from './DeleteTasks';
 import PostTask from './PostTask';
+import DeleteTasks from './DeleteTasks';
+import ToggleTask from './ToggleTask';
+import DeleteTask from './DeleteTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -24,7 +26,7 @@ export default function TaskList() {
             }
         });
     }
-
+  
     function handleComplete(complete: boolean): string {
         if (complete) {
             return "Completed"
@@ -39,9 +41,11 @@ export default function TaskList() {
             <DeleteTasks onTasksDeleted={updateList} />
             <div>
                 {taskList.map(task => (
-                    <p key={task.id}>
-                        #{task.id}: {task.title} - {handleComplete(task.complete)}
-                    </p>
+                <div>
+                    <p key={task.id}>{task.title} - {handleComplete(task.complete)}</p>
+                    <ToggleTask onTaskToggled={updateList} taskID={task.id}/>
+                    <DeleteTask onTaskDeleted={updateList} taskID={task.id}/>
+                </div>
                 ))}
             </div>
         </div>
