@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Task } from './Task-Interface';
 import DeleteTasks from './DeleteTasks';
+import PostTask from './PostTask';
 
 const GET_TASKS_URL: string = "http://localhost:8080/tasks?id=&title=&complete="
 
@@ -34,7 +35,8 @@ export default function TaskList() {
 
     return (
         <div>
-            <DeleteTasks onTasksDeleted={updateList}/>
+            <PostTask onTaskAdded={updateList} />
+            <DeleteTasks onTasksDeleted={updateList} />
             <div>
                 {taskList.map(task => (
                     <p key={task.id}>
