@@ -9,10 +9,11 @@ interface SearchBarProps {
 export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarProps) {
 
     const handleIDChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (isNaN(e.target.valueAsNumber)) {
+        let value: number = e.target.valueAsNumber
+        if (isNaN(value)) {
             setSearchedTask({id: 0, title: searchedTask.title, complete: searchedTask.complete});
         } else {
-            setSearchedTask({id: e.target.valueAsNumber, title: searchedTask.title, complete: searchedTask.complete});
+            setSearchedTask({id: value, title: searchedTask.title, complete: searchedTask.complete});
         }
     }
 
