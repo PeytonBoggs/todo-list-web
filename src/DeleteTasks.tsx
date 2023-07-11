@@ -1,3 +1,4 @@
+import { Button, Card, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface DeleteTasksProps {
@@ -7,7 +8,8 @@ interface DeleteTasksProps {
 const DELETE_TASKS_URL: string = "http://localhost:8080/tasks"
 
 export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
-    const [deleteMessage, setDeleteMessage] = useState<string>("")
+    const [, setDeleteMessage] = useState<string>("")
+    const toast = useToast();
     
     function handleDeleteTasksClick() {
         fetch (DELETE_TASKS_URL, {
@@ -17,14 +19,23 @@ export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
             }
         })
         .then(response => response.json())
-        .then(setDeleteMessage)
-        .then(onTasksDeleted)
+        .then(data => {
+            setDeleteMessage(data);
+            onTasksDeleted();
+            toast({
+                variant: "left-accent",
+                position: "top-right",
+                title: data,
+                status: "success"
+            })
+        })
     }
     
     return (
         <div>
-            <button onClick={() => handleDeleteTasksClick()}>Delete all tasks</button>
-            <p>{deleteMessage}</p>
+            <Card width="90%" margin="5%">
+                <Button width="100%" colorScheme="red" onClick={() => handleDeleteTasksClick()}>Delete All Tasks</Button>
+            </Card>
         </div>
     )
 }
