@@ -1,4 +1,4 @@
-import { Button, Card, useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface DeleteTasksProps {
@@ -26,16 +26,14 @@ export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
                 variant: "left-accent",
                 position: "top-right",
                 title: data,
-                status: "success"
+                status: "error"
             })
         })
     }
     
     return (
         <div>
-            <Card width="90%" margin="5%">
-                <Button width="100%" colorScheme="red" onClick={() => handleDeleteTasksClick()}>Delete All Tasks</Button>
-            </Card>
+            <Button width="90%" bg="#FFD6E0" border="3px solid red" _hover={{bg:"#FFB5C7"}} margin="5%" onClick={() => handleDeleteTasksClick()}>Delete All Tasks</Button>
         </div>
     )
 }

@@ -30,10 +30,10 @@ export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarPr
 
     return (
         <div>
-            <Card width="90%" margin="5%" padding="10px">
+            <Card width="90%" border="3px solid grey" margin="5%" padding="10px">
                 <Flex flexDirection="column" alignItems="center" alignContent="space-around">
                     <CardHeader padding="10px">
-                        <Highlight query="Search Tasks:" styles={{ fontSize: "25", fontWeight: "700", p: "3", rounded: "full", bg: "#C1FBA4"}}>Search Tasks:</Highlight>
+                        <Highlight query="Search Tasks:" styles={{ fontSize: "25", fontWeight: "700", p: "3", rounded: "full", bg: "#E0FFD6"}}>Search Tasks:</Highlight>
                     </CardHeader>
                     <HStack width="90%" padding="10px" paddingLeft="0">
                         <Text fontSize="20" width="20%" padding="10px">Title:</Text>

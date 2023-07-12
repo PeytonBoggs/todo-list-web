@@ -6,7 +6,7 @@ import PostTask from './PostTask';
 import DeleteTasks from './DeleteTasks';
 import ToggleTask from './ToggleTask';
 import DeleteTask from './DeleteTask';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Card, Divider, Flex, Text } from '@chakra-ui/react';
 
 export default function TaskList() {
     const [taskList, setTaskList] = useState<Task[]>([]);
@@ -42,34 +42,53 @@ export default function TaskList() {
         });
     }
   
-    function handleComplete(complete: boolean): string {
+    function handleComplete(complete: boolean, border: boolean): string {
         if (complete) {
-            return "completed"
+            if (border) {
+                return "#297105"
+            } else {
+                return "#E0FFD6"
+            }
         } else {
-            return "to-do"
+            if (border) {
+                return "grey"
+            } else {
+                return "#EDF7F7"
+            }
         }
     }
 
     return (
         <div>
-            <Flex>
+            <Flex borderBottom="4px solid grey" height="100vh">
                 <Box width="30%" bg="#7BF1A8">
                     <AppHeader />
                     <PostTask onTaskAdded={updateList} />
                     <SearchBar searchedTask={searchedTask} setSearchedTask={setSearchedTask} />
                     <DeleteTasks onTasksDeleted={updateList} />
                 </Box>
-                <Box width="70%" height="100%">
-                <div>
-                    <p>Showing all {handleComplete(searchedTask.complete)} tasks with ID: {searchedTask.id} and Title: "{searchedTask.title}"</p>
+                <Box width="70%" bg="#DBEFF0" borderLeft="4px solid grey">
                     {taskList.map(task => (
-                    <div>
-                        <p key={task.id}>{task.title} -- {handleComplete(task.complete)}</p>
-                        <ToggleTask onTaskToggled={updateList} taskID={task.id}/>
-                        <DeleteTask onTaskDeleted={updateList} taskID={task.id}/>
-                    </div>
+                    <Card shadow="xl" bg={handleComplete(task.complete, false)} border="2px solid grey" borderLeft="10px solid" borderLeftColor={handleComplete(task.complete, true)} margin="20px">
+                        <Flex flexDirection="row" alignItems="center" gap="10px" margin="20px">
+                            <Box width="8%"> 
+                                <Text fontWeight="bold" fontSize="3xl" margin="5px">#{task.id}</Text>
+                            </Box>
+                            <Box width="2px" marginRight="8px">
+                                <Divider orientation="vertical" borderColor={handleComplete(task.complete, true)} height="50px" borderWidth="2px" />
+                            </Box>
+                            <Box width="50%">
+                                <Text fontWeight="bold" fontSize="3xl">{task.title}</Text>
+                            </Box>
+                            <Box width="20%">
+                                <ToggleTask onTaskToggled={updateList} task={task}/>
+                            </Box>
+                            <Box width="20%">
+                                <DeleteTask onTaskDeleted={updateList} taskID={task.id}/>
+                            </Box>
+                        </Flex>
+                    </Card>
                     ))}
-                </div>
                 </Box>
             </Flex>
         </div>
