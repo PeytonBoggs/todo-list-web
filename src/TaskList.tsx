@@ -6,13 +6,14 @@ import PostTask from './PostTask';
 import DeleteTasks from './DeleteTasks';
 import ToggleTask from './ToggleTask';
 import DeleteTask from './DeleteTask';
-import { Box, Card, CircularProgress, CircularProgressLabel, Divider, Flex, Text } from '@chakra-ui/react';
+import { Box, Card, CircularProgress, CircularProgressLabel, Divider, Flex, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { MdCelebration } from 'react-icons/md'
 import { FaSadTear } from 'react-icons/fa'
 
 export default function TaskList() {
     const [activeTaskList, setActiveTaskList] = useState<Task[]>([]);
     const [searchedTask, setSearchedTask] = useState<Task>({id: 0, title: "", complete: false});
+    const [searchAllTasks, setSearchAllTasks] = useState<boolean>(true)
     const [percentComplete, setPercentComplete] = useState<number>(0);
 
     useEffect(() => {
@@ -26,6 +27,29 @@ export default function TaskList() {
         updatePercentComplete();
     }
 
+    function updateActiveList() {
+        let url: string = "http://localhost:8080/tasks?"
+        if (searchedTask.id !== 0) {
+            url = url.concat("id=" + String(searchedTask.id) + "&")
+        }
+        if (searchedTask.title !== "") {
+            url = url.concat("title=" + String(searchedTask.title) + "&")
+        }
+        if (!searchAllTasks) {
+            url = url.concat("complete=" + String(searchedTask.complete) + "&")
+        }
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data === null) {
+                setActiveTaskList([]);
+            } else {
+                setActiveTaskList(data);
+            }
+        });
+    }
+    
     function updatePercentComplete() {
         fetch("http://localhost:8080/tasks")
         .then(response => response.json())
@@ -35,8 +59,6 @@ export default function TaskList() {
                 return
             }
 
-            console.log(fullTaskList)
-            
             let completeTasks: number = 0;
             let totalTasks: number = fullTaskList.length;
 
@@ -50,31 +72,21 @@ export default function TaskList() {
         });
     }
 
-    function updateActiveList() {
-        let url: string = "http://localhost:8080/tasks?"
-        if (searchedTask.id !== 0) {
-            url = url.concat("id=" + String(searchedTask.id) + "&")
+    function handleTabChange(tab: string) {
+        if (tab === "allTasks") {
+            setSearchedTask({id: 0, title: "", complete: false})
+            setSearchAllTasks(true)
         }
-        if (searchedTask.title !== "") {
-            url = url.concat("title=" + String(searchedTask.title) + "&")
+        if (tab === "todoTasks") {
+            setSearchedTask({id: 0, title: "", complete: false})
+            setSearchAllTasks(false)
         }
-        if (searchedTask.complete) {
-            url = url.concat("complete=true&")
-        } else {
-            url = url.concat("complete=false&")
+        if (tab === "completeTasks") {
+            setSearchedTask({id: 0, title: "", complete: true})
+            setSearchAllTasks(false)
         }
-
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data === null) {
-                setActiveTaskList([]);
-            } else {
-                setActiveTaskList(data);
-            }
-        });
     }
-  
+
     function handleComplete(complete: boolean, border: boolean): string {
         if (complete) {
             if (border) {
@@ -95,20 +107,20 @@ export default function TaskList() {
         if (percentComplete === 100) {
             return <MdCelebration size="50%" color="#297105"></MdCelebration>
         } else {
-            return <FaSadTear size="50%" color="#FFD6E0"></FaSadTear>
+            return <FaSadTear size="50%" color="#EB003B"></FaSadTear>
         }
     }
 
     return (
         <div>
             <Flex borderBottom="4px solid grey" height="100vh">
-                <Box width="30%" bg="#7BF1A8">
+                <Box width="30%" bg="#E0FFD6">
                     <AppHeader />
                     <PostTask onTaskAdded={updateStates} />
                     <SearchBar searchedTask={searchedTask} setSearchedTask={setSearchedTask} />
                     <Box width="90%" margin="5%">
                         <Flex justifyContent="center" flexDirection="column" alignItems="center">
-                            <CircularProgress color="#297105" trackColor="#FFD6E0" size="100%" thickness="16px" value={percentComplete}>
+                            <CircularProgress color="#297105" trackColor="#EB003B" size="100%" thickness="16px" value={percentComplete}>
                                 <CircularProgressLabel>
                                     <Flex justifyContent="center" height="50%">
                                         {getProgressIcon()}
@@ -121,6 +133,19 @@ export default function TaskList() {
                     <DeleteTasks onTasksDeleted={updateStates} />
                 </Box>
                 <Box width="70%" bg="#DBEFF0" borderLeft="4px solid grey">
+                    <Tabs margin="20px" variant="soft-rounded" align="center" size="lg" isFitted={true}>
+                        <TabList>
+                            <Tab margin="10px" bg="#EDF7F7" border="3px solid" borderColor="grey" _selected={{borderColor:"grey", bg:"black", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("allTasks")}>
+                                All Tasks
+                            </Tab>
+                            <Tab margin="10px" bg="#FFD6E0" border="3px solid" borderColor="#EB003B" _selected={{borderColor:"grey", bg:"#EB003B", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("todoTasks")}>
+                                To-Do Tasks
+                            </Tab>
+                            <Tab margin="10px" bg="#E0FFD6" border="3px solid" borderColor="#297105" _selected={{borderColor:"grey", bg:"#297105", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("completeTasks")}>
+                                Complete Tasks
+                            </Tab>
+                        </TabList>
+                    </Tabs>
                     {activeTaskList.map(task => (
                     <Card shadow="xl" bg={handleComplete(task.complete, false)} border="2px solid grey" borderLeft="10px solid" borderLeftColor={handleComplete(task.complete, true)} margin="20px">
                         <Flex flexDirection="row" alignItems="center" gap="10px" margin="20px">

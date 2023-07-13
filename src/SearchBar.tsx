@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { Task } from "./Task-Interface";
-import { Card, CardHeader, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Switch, Text, Highlight, HStack, Flex } from '@chakra-ui/react';
+import { Card, CardHeader, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, Highlight, HStack, Flex } from '@chakra-ui/react';
 
 interface SearchBarProps {
     searchedTask: Task
@@ -24,10 +24,6 @@ export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarPr
         setSearchedTask({id: searchedTask.id, title: e.target.value, complete: searchedTask.complete});
     }
 
-    const handleCompleteChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchedTask({id: searchedTask.id, title: searchedTask.title, complete: e.target.checked});
-    }
-
     return (
         <div>
             <Card width="90%" border="3px solid grey" margin="5%" padding="10px">
@@ -36,22 +32,18 @@ export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarPr
                         <Highlight query="Search Tasks:" styles={{ fontSize: "25", fontWeight: "700", p: "3", rounded: "full", bg: "#E0FFD6"}}>Search Tasks:</Highlight>
                     </CardHeader>
                     <HStack width="90%" padding="10px" paddingLeft="0">
-                        <Text fontSize="20" width="20%" padding="10px">Title:</Text>
-                        <Input type="search" width="80%" onChange={handleTitleChange}/>
+                        <Text fontSize="20" width="30%" padding="10px">By Title:</Text>
+                        <Input type="search" width="70%" onChange={handleTitleChange}/>
                     </HStack>
-                    <HStack width="50%" padding="10px">
-                        <Text fontSize="20" width="20%">ID:</Text>
-                        <NumberInput width="80%" defaultValue={NaN} min={0} onChange={handleIDChange}>
+                    <HStack width="80%" padding="10px">
+                        <Text fontSize="20" width="30%" padding="10px"> By ID:</Text>
+                        <NumberInput width="70%" defaultValue={NaN} min={0} onChange={handleIDChange}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />
                             </NumberInputStepper>
                         </NumberInput>
-                    </HStack>
-                    <HStack width="80%" padding="10px">
-                        <Text align="right" fontSize="20" width="60%">Complete?</Text>
-                        <Switch width="40%" size="lg" colorScheme="green" onChange={handleCompleteChange} />
                     </HStack>
                 </Flex>
             </Card>

@@ -30,7 +30,7 @@ export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
     
     return (
         <div>
-            <Button width="90%" bg="#FFD6E0" border="3px solid red" _hover={{bg:"#FFB5C7"}} margin="5%" onClick={() => handleDeleteTasksClick()}>Delete All Tasks</Button>
+            <Button width="90%" bg="#FFD6E0" border="3px solid" borderColor="#EB003B" _hover={{bg:"#FFB5C7"}} margin="5%" onClick={() => handleDeleteTasksClick()}>Delete All Tasks</Button>
         </div>
     )
 }

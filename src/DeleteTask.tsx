@@ -31,7 +31,7 @@ export default function DeleteTask({ onTaskDeleted, taskID }: DeleteTaskProps) {
 
     return (
         <div>
-          <Button width="100%" bg="#FFD6E0" border="2px solid red" _hover={{backgroundColor:"#FFB5C7"}} onClick={() => handleDeleteClick(taskID)}>
+          <Button width="100%" bg="#FFD6E0" border="2px solid" borderColor="#EB003B" _hover={{backgroundColor:"#FFB5C7"}} onClick={() => handleDeleteClick(taskID)}>
             <HStack>
                     <Text>Delete Task</Text>
                     <Icon as={RiDeleteBin6Fill} />
