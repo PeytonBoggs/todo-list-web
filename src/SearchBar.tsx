@@ -41,7 +41,7 @@ export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarPr
                     </HStack>
                     <HStack width="50%" padding="10px">
                         <Text fontSize="20" width="20%">ID:</Text>
-                        <NumberInput width="80%" defaultValue={NaN} min={0} onChange={(valueString) => handleIDChange(valueString)}>
+                        <NumberInput width="80%" defaultValue={NaN} min={0} onChange={handleIDChange}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />

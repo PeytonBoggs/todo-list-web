@@ -7,7 +7,6 @@ interface PostTaskProps {
 
 export default function PostTask({ onTaskAdded }: PostTaskProps) {
     const [inputTitle, setInputTitle] = useState<string>("");
-    const [, setAddMessage] = useState<string>("");
     const toast = useToast();
 
     const handleAddChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +30,6 @@ export default function PostTask({ onTaskAdded }: PostTaskProps) {
         })
         .then(response => response.json())
         .then(data => {
-            setAddMessage(data);
             onTaskAdded();
             toast({
                 variant: "left-accent",

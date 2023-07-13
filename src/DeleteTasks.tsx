@@ -1,5 +1,4 @@
 import { Button, useToast } from '@chakra-ui/react';
-import { useState } from 'react';
 
 interface DeleteTasksProps {
     onTasksDeleted: () => void
@@ -8,7 +7,6 @@ interface DeleteTasksProps {
 const DELETE_TASKS_URL: string = "http://localhost:8080/tasks"
 
 export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
-    const [, setDeleteMessage] = useState<string>("")
     const toast = useToast();
     
     function handleDeleteTasksClick() {
@@ -20,7 +18,6 @@ export default function DeleteTasks({ onTasksDeleted }: DeleteTasksProps) {
         })
         .then(response => response.json())
         .then(data => {
-            setDeleteMessage(data);
             onTasksDeleted();
             toast({
                 variant: "left-accent",

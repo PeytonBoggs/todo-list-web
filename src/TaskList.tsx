@@ -136,7 +136,7 @@ export default function TaskList() {
                             <Box width="20%">
                                 <ToggleTask onTaskToggled={updateStates} task={task}/>
                             </Box>
-                            <Box width="20%">
+                            <Box width={[100, 200, 300]}>
                                 <DeleteTask onTaskDeleted={updateStates} taskID={task.id}/>
                             </Box>
                         </Flex>
