@@ -22,7 +22,7 @@ export default function TaskList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchedTask]);
 
-    function updateStates() {
+    async function updateStates() {
         updateActiveList();
         updatePercentComplete();
     }
@@ -105,63 +105,65 @@ export default function TaskList() {
 
     function getProgressIcon(): JSX.Element {
         if (percentComplete === 100) {
-            return <MdCelebration size="50%" color="#297105"></MdCelebration>
+            return <MdCelebration size="7rem" color="#297105"></MdCelebration>
         } else {
-            return <FaSadTear size="50%" color="#EB003B"></FaSadTear>
+            return <FaSadTear size="7rem" color="#EB003B"></FaSadTear>
         }
     }
 
     return (
         <div>
-            <Flex borderBottom="4px solid grey" height="100vh">
-                <Box width="30%" bg="#E0FFD6">
-                    <AppHeader />
-                    <PostTask onTaskAdded={updateStates} />
-                    <SearchBar searchedTask={searchedTask} setSearchedTask={setSearchedTask} />
-                    <Box width="90%" margin="5%">
-                        <Flex justifyContent="center" flexDirection="column" alignItems="center">
-                            <CircularProgress color="#297105" trackColor="#EB003B" size="100%" thickness="16px" value={percentComplete}>
-                                <CircularProgressLabel>
-                                    <Flex justifyContent="center" height="50%">
-                                        {getProgressIcon()}
-                                    </Flex>
-                                </CircularProgressLabel>
-                            </CircularProgress>
-                            <Text marginTop="10px" fontSize="150%" fontWeight="bold">{percentComplete}% Complete</Text>
+            <Flex height="100vh" width="100vw">
+                <Box minWidth="30rem" minHeight="50rem" bg="#E0FFD6" overflowY="auto">
+                    <Flex height="full" flexDirection="column" justifyContent="space-around" alignItems="center">
+                        <AppHeader />
+                        <PostTask onTaskAdded={updateStates} />
+                        <SearchBar searchedTask={searchedTask} setSearchedTask={setSearchedTask} />
+                        <Flex flex="1" width="25rem" justifyContent="center" alignItems="center">
+                            <Flex flexDirection="column" alignItems="center">
+                                <CircularProgress color="#297105" trackColor="#EB003B" size="15rem" thickness="0.5rem" value={percentComplete}>
+                                    <CircularProgressLabel>
+                                        <Flex justifyContent="center">
+                                            {getProgressIcon()}
+                                        </Flex>
+                                    </CircularProgressLabel>
+                                </CircularProgress>
+                                <Text marginTop="-0.5rem" fontSize="1.5rem" fontWeight="bold">{percentComplete}% Complete</Text>
+                            </Flex>
                         </Flex>
-                    </Box>
-                    <DeleteTasks onTasksDeleted={updateStates} />
+                        <DeleteTasks onTasksDeleted={updateStates} />
+                    </Flex>
                 </Box>
-                <Box width="70%" bg="#DBEFF0" borderLeft="4px solid grey">
-                    <Tabs margin="20px" variant="soft-rounded" align="center" size="lg" isFitted={true}>
+                <Box minWidth="60rem" flex="1" bg="#DBEFF0" borderLeft="0.3rem solid grey" overflowY="auto">
+                    <Tabs margin="1rem" variant="soft-rounded" align="center" size="lg" isFitted={true}>
                         <TabList>
-                            <Tab margin="10px" bg="#EDF7F7" border="3px solid" borderColor="grey" _selected={{borderColor:"grey", bg:"black", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("allTasks")}>
+                            <Tab margin="0.5rem" bg="#EDF7F7" border="0.3rem solid" borderColor="grey" _selected={{borderColor:"grey", bg:"black", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("allTasks")}>
                                 All Tasks
                             </Tab>
-                            <Tab margin="10px" bg="#FFD6E0" border="3px solid" borderColor="#EB003B" _selected={{borderColor:"grey", bg:"#EB003B", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("todoTasks")}>
+                            <Tab margin="0.5rem" bg="#FFD6E0" border="0.3rem solid" borderColor="#EB003B" _selected={{borderColor:"grey", bg:"#EB003B", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("todoTasks")}>
                                 To-Do Tasks
                             </Tab>
-                            <Tab margin="10px" bg="#E0FFD6" border="3px solid" borderColor="#297105" _selected={{borderColor:"grey", bg:"#297105", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("completeTasks")}>
+                            <Tab margin="0.5rem" bg="#E0FFD6" border="0.3rem solid" borderColor="#297105" _selected={{borderColor:"grey", bg:"#297105", color:"white", fontWeight:"bold"}} onClick={() => handleTabChange("completeTasks")}>
                                 Complete Tasks
                             </Tab>
                         </TabList>
                     </Tabs>
                     {activeTaskList.map(task => (
-                    <Card shadow="xl" bg={handleComplete(task.complete, false)} border="2px solid grey" borderLeft="10px solid" borderLeftColor={handleComplete(task.complete, true)} margin="20px">
-                        <Flex flexDirection="row" alignItems="center" gap="10px" margin="20px">
-                            <Box width="8%"> 
-                                <Text fontWeight="bold" fontSize="3xl" margin="5px">#{task.id}</Text>
+                    <Card margin="1rem" marginTop="2rem" shadow="xl" bg={handleComplete(task.complete, false)} border="0.3rem solid" borderLeft="1rem solid" borderColor={handleComplete(task.complete, true)}>
+                        <Flex alignItems="center" margin="1rem">
+                            <Box> 
+                                <Text width="3rem" marginRight="1rem" textAlign="center" fontWeight="bold" fontSize="1.5rem">#{task.id}</Text>
                             </Box>
-                            <Box width="2px" marginRight="8px">
-                                <Divider orientation="vertical" borderColor={handleComplete(task.complete, true)} height="50px" borderWidth="2px" />
+                            <Box width="0rem" marginRight="1.5rem">
+                                <Divider orientation="vertical" borderColor={handleComplete(task.complete, true)} height="3.5rem" borderWidth="0.13rem" />
                             </Box>
-                            <Box width="50%">
-                                <Text fontWeight="bold" fontSize="3xl">{task.title}</Text>
+                            <Box flex="5">
+                                <Text fontWeight="semibold" fontSize="2rem">{task.title}</Text>
                             </Box>
-                            <Box width="20%">
+                            <Box flex="1">
                                 <ToggleTask onTaskToggled={updateStates} task={task}/>
                             </Box>
-                            <Box width={[100, 200, 300]}>
+                            <Box flex="1">
                                 <DeleteTask onTaskDeleted={updateStates} taskID={task.id}/>
                             </Box>
                         </Flex>

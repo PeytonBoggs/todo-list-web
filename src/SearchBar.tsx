@@ -26,18 +26,18 @@ export default function SearchBar({ searchedTask, setSearchedTask }: SearchBarPr
 
     return (
         <div>
-            <Card width="90%" border="3px solid grey" margin="5%" padding="10px">
+            <Card flex="1" margin="0.5rem" width="25rem" border="0.3rem solid grey" padding="1rem">
                 <Flex flexDirection="column" alignItems="center" alignContent="space-around">
-                    <CardHeader padding="10px">
-                        <Highlight query="Search Tasks:" styles={{ fontSize: "25", fontWeight: "700", p: "3", rounded: "full", bg: "#E0FFD6"}}>Search Tasks:</Highlight>
+                    <CardHeader padding="0.5rem">
+                        <Highlight query="Search Tasks" styles={{ fontSize: "1.5rem", fontWeight: "bold", p: "0.8rem", rounded: "full", bg: "#E0FFD6"}}>Search Tasks</Highlight>
                     </CardHeader>
-                    <HStack width="90%" padding="10px" paddingLeft="0">
-                        <Text fontSize="20" width="30%" padding="10px">By Title:</Text>
-                        <Input type="search" width="70%" onChange={handleTitleChange}/>
+                    <HStack width="23rem" padding="1rem" paddingLeft="0">
+                        <Text fontSize="1.5rem" width="8rem" padding="0.5rem">By Title:</Text>
+                        <Input width="20rem" onChange={handleTitleChange}/>
                     </HStack>
-                    <HStack width="80%" padding="10px">
-                        <Text fontSize="20" width="30%" padding="10px"> By ID:</Text>
-                        <NumberInput width="70%" defaultValue={NaN} min={0} onChange={handleIDChange}>
+                    <HStack width="23rem" padding="-0.5rem">
+                        <Text fontSize="1.5rem" width="6.2rem" padding="0.5rem">By ID:</Text>
+                        <NumberInput width="15.3rem" defaultValue={NaN} min={0} onChange={handleIDChange}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />

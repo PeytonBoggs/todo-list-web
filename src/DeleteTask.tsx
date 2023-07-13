@@ -1,5 +1,6 @@
 import { Button, HStack, Icon, Text, useToast } from "@chakra-ui/react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { CheckCircleIcon } from "@chakra-ui/icons"
 
 interface DeleteTaskProps {
     onTaskDeleted: () => void
@@ -14,7 +15,8 @@ export default function DeleteTask({ onTaskDeleted, taskID }: DeleteTaskProps) {
             variant:"left-accent",
             position:"top-right",
             title:"Task Deleted",
-            status:"error"
+            status:"error",
+            icon: <CheckCircleIcon boxSize="1.3rem"/>
         })
 
         const url = "http://localhost:8080/tasks/id/" + id
@@ -31,7 +33,7 @@ export default function DeleteTask({ onTaskDeleted, taskID }: DeleteTaskProps) {
 
     return (
         <div>
-          <Button width="100%" bg="#FFD6E0" border="2px solid" borderColor="#EB003B" _hover={{backgroundColor:"#FFB5C7"}} onClick={() => handleDeleteClick(taskID)}>
+          <Button width="12rem" bg="#FFD6E0" border="0.15rem solid" borderColor="#EB003B" _hover={{backgroundColor:"#FFB5C7"}} onClick={() => handleDeleteClick(taskID)}>
             <HStack>
                     <Text>Delete Task</Text>
                     <Icon as={RiDeleteBin6Fill} />

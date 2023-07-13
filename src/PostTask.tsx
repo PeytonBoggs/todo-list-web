@@ -42,17 +42,17 @@ export default function PostTask({ onTaskAdded }: PostTaskProps) {
 
     return (
         <div>
-            <Card width="90%" border="3px solid grey" margin="5%" padding="10px">
+            <Card flex="1" margin="0.5rem" width="25rem" border="0.3rem solid grey" padding="1rem">
                 <Flex flexDirection="column" alignItems="center" alignContent="space-around">
-                    <CardHeader padding="10px">
-                        <Highlight query="Add Task:" styles={{ fontSize: "25", fontWeight: "700", p: "3", rounded: "full", bg: "#E0FFD6"}}>Add Task:</Highlight>
+                    <CardHeader padding="0.5rem">
+                        <Highlight query="Add Task" styles={{ fontSize: "1.5rem", fontWeight: "bold", p: "0.8rem", rounded: "full", bg: "#E0FFD6"}}>Add Task</Highlight>
                     </CardHeader>
-                    <HStack width="90%" padding="10px" paddingLeft="0">
-                        <Text fontSize="20" width="20%" padding="10px">Title:</Text>
-                        <Input width="100%" value={inputTitle} onChange={handleAddChange}></Input>
+                    <HStack width="23rem" padding="1rem" paddingLeft="0">
+                        <Text fontSize="1.5rem" padding="0.5rem">Title:</Text>
+                        <Input value={inputTitle} onChange={handleAddChange}></Input>
                     </HStack>
                     <HStack>
-                        <Button width="100%" onClick={() => handleAddClick(inputTitle)}>Add Task</Button>
+                        <Button width="7rem" onClick={() => handleAddClick(inputTitle)}>Add Task</Button>
                     </HStack>
                 </Flex>
             </Card>
